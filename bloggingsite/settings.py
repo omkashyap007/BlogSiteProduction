@@ -5,9 +5,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-x34)-4t5-k9nsupj0=@!wofx#=+s!^k@y!i4g)&se7i$1=&sh#'
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1" ,"blogsitedevelopment007.herokuapp.com" ,"localhost"]
+ALLOWED_HOSTS = ["143.110.254.51"]
+ROOT_URLCONF = 'bloggingsite.urls'
+WSGI_APPLICATION = 'bloggingsite.wsgi.application'
 
 INSTALLED_APPS = [
     'users.apps.UsersConfig',
@@ -24,7 +26,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -33,7 +34,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'bloggingsite.urls'
 
 TEMPLATES = [
     {
@@ -51,19 +51,6 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'bloggingsite.wsgi.application'
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-# import dj_database_url
-# db_from_env = dj_database_url.config(conn_max_age = 600)
-# DATABASES["default"].update(db_from_env)
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -92,16 +79,71 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static/'
-MEDIA_URL = "/media/"
+
+
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'django_db',
+        'USER': 'django',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
+
+AWS_ACCESS_KEY_ID = "FD6EPEJV4UM55BQCJIKY"
+AWS_SECRET_ACCESS_KEY = "1vdNLiXOe5JxnUgLxB+duaDkmjfch09fSyosthWEtVo"
+AWS_STORAGE_BUCKET_NAME = "blog-site"
+AWS_S3_ENDPOINT_URL = "https://nyc3.digitaloceanspaces.com"
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = "blog-site-static"
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR , "static") ,
-    os.path.join(BASE_DIR , "media") ,
+    os.path.join(BASE_DIR, 'static'),
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-MEDIA_ROOT = os.path.join(BASE_DIR , 'media')
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_ENDPOINT_URL, AWS_LOCATION)
+TEMP = os.path.join(BASE_DIR, 'temp')
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = "omkashyapcric@gmail.com"
+EMAIL_HOST_PASSWORD = "-(@49#brVzYm!2$%)"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'BloggingSite Team <noreply@omkashyap.com>'
+
+
+BASE_URL = "http://143.110.254.51"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

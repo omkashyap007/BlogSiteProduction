@@ -110,8 +110,9 @@
           "
         >
           <img
-            src="{% static 'blog/site image black 3.jpg' %}"
+            src=""
             style = "width : 220px ; height : 80px ; border-radius : 20px ;  "
+            id = "site_image_display_top"
           />
 
           <ul
@@ -243,6 +244,13 @@
       
       {% block content %} {% endblock content %}
     </div>
+
+    <script>
+
+      var site_image_display_top = document.getElementById("site_image_display_top") ;
+      site_image_display_top.src = "{% static 'blog/site image black 3.jpg' %}".replace(/&amp;/g , "&")
+
+    </script>
 
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
